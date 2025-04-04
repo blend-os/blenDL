@@ -51,8 +51,10 @@ class colors:
 
 fg = colors.fg()
 bg = colors.bg()
+
 remote = "https://git.blendos.co/api/v4/projects/32/jobs/artifacts/main/raw/blendOS.iso?job=build-job"
 version = "https://git.blendos.co/api/v4/projects/32/jobs/artifacts/main/raw/version?job=build-job"
+
 load_dotenv()
 local_iso = str(os.getenv("LOCAL_ISO_FILE"))
 local_version = str(os.getenv("LOCAL_VERSION_FILE"))
@@ -86,6 +88,7 @@ if is_admin():
         + " Do not run this script as admin."
         + colors.reset
     )
+
 if local_iso == None:
     print(
         colors.bold
@@ -98,6 +101,7 @@ if local_iso == None:
         + colors.reset
     )
     critical()
+
 if local_version == None:
     print(
         colors.bold
@@ -110,6 +114,7 @@ if local_version == None:
         + colors.reset
     )
     critical()
+
 if os.path.isfile(local_iso) == False:
     print(
         colors.bold
@@ -122,6 +127,7 @@ if os.path.isfile(local_iso) == False:
         + colors.reset
     )
     critical()
+
 if os.path.isfile(local_version) == False:
     print(
         colors.bold
@@ -134,6 +140,7 @@ if os.path.isfile(local_version) == False:
         + colors.reset
     )
     critical()
+
 if os.access(local_iso, os.W_OK) == False:
     print(
         colors.bold
@@ -143,6 +150,7 @@ if os.access(local_iso, os.W_OK) == False:
         + " Cannot write to local ISO file! Please verify this user has write permissions."
     )
     critical()
+
 if os.access(local_version, os.W_OK) == False:
     print(
         colors.bold
@@ -216,6 +224,7 @@ def download_iso():
 def download_version():
     global version
     global local_version
+
     try:
         response = requests.get(version, stream=True)
     except requests.exceptions.RequestException as e:
@@ -228,6 +237,7 @@ def download_version():
             + colors.reset
         )
         critical()
+    
     # Check if the status code is 200 (OK)
     if response.status_code != 200:
         print(
@@ -239,10 +249,12 @@ def download_version():
             + colors.reset
         )
         exit(1)  # Exit the program with a non-zero status code
+    
     content = str(response.text)
     with open(local_version, "rb") as f:
         existing = f.read()
         existing2 = str(existing.decode())
+    
     if content != existing2:
         print(
             colors.bold
@@ -252,6 +264,7 @@ def download_version():
             + " Version file is out of date! Updating..."
             + colors.reset
         )
+
         with open(local_version, "wb") as f:
             content2 = content.encode()
             f.write(content2)
@@ -263,6 +276,7 @@ def download_version():
             + " Version download success!"
             + colors.reset
         )
+
     else:
         print(
             colors.bold
@@ -272,6 +286,7 @@ def download_version():
             + " Version files match, ISO is up to date."
             + colors.reset
         )
+
         exit(0)
 
 
