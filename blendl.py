@@ -88,6 +88,7 @@ if is_admin():
         + " Do not run this script as admin."
         + colors.reset
     )
+    critical()
 
 if local_iso == None:
     print(
