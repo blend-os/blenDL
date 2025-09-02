@@ -288,8 +288,7 @@ def download_version():
             + colors.reset
         )
 
-        exit(0)
-
 
 download_version()
 download_iso()
+exit(0)
