@@ -148,7 +148,7 @@ if os.access(local_iso, os.W_OK) == False:
         + fg.red
         + ">> e:"
         + fg.white
-        + " Cannot write to local ISO file! Please verify this user has write permissions."
+        + " Cannot write to local ISO file! Please verify that this user has write permissions."
     )
     critical()
 
@@ -158,7 +158,7 @@ if os.access(local_version, os.W_OK) == False:
         + fg.red
         + ">> e:"
         + fg.white
-        + " Cannot write to local version file! Please verify this user has write permissions."
+        + " Cannot write to local version file! Please verify that this user has write permissions."
     )
     critical()
 
